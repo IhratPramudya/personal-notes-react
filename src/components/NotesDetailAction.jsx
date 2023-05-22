@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 /* eslint-disable max-len */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -18,9 +19,9 @@ function NotesDetailAction({
 NotesDetailAction.propTypes = {
   id: PropTypes.string.isRequired,
   deleteNote: PropTypes.func.isRequired,
-  archivenote: PropTypes.func.isRequired,
+  archivenote: PropTypes.func,
   archived: PropTypes.bool.isRequired,
-  deleteArchiveNote: PropTypes.func.isRequired,
+  deleteArchiveNote: PropTypes.func,
 };
 
 export default NotesDetailAction;

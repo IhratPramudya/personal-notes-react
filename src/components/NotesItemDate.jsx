@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { showFormattedDate } from '../utils';
 
 function NotesItemDate({ createdAt }) {
-  <p>{createdAt}</p>;
+  return <p>{ showFormattedDate(createdAt)}</p>;
 }
 
 NotesItemDate.propTypes = {

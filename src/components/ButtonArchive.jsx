@@ -1,8 +1,9 @@
+/* eslint-disable react/require-default-props */
 /* eslint-disable react/prop-types */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React from 'react';
 import { FaArrowCircleDown, FaArrowAltCircleUp } from 'react-icons/fa';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 function ButtonArchive({
   id, archivenote, archived, deleteArchiveNote,
@@ -11,11 +12,11 @@ function ButtonArchive({
     : <button className="action" type="button" title="Arsip" onClick={() => archivenote(id)}><FaArrowCircleDown /></button>;
 }
 
-// ButtonArchive.propTypes = {
-//   id: PropTypes.string.isRequired,
-//   archivenote: PropTypes.func.isRequired,
-//   archived: PropTypes.bool.isRequired,
-//   deleteArchiveNote: PropTypes.func.isRequired,
-// };
+ButtonArchive.propTypes = {
+  id: PropTypes.string.isRequired,
+  archivenote: PropTypes.func,
+  archived: PropTypes.bool.isRequired,
+  deleteArchiveNote: PropTypes.func,
+};
 
 export default ButtonArchive;

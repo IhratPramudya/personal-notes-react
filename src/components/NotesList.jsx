@@ -25,7 +25,7 @@ function NotesList({ notes }) {
 }
 
 NotesList.propTypes = {
-  notes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  notes: PropTypes.array.isRequired,
 };
 
 export default NotesList;

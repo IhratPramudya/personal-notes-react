@@ -10,6 +10,7 @@ import {
   deleteNote, getNote, archiveNote, unarchiveNote,
 } from '../utils/local-data';
 import NotesDetailAction from '../components/NotesDetailAction';
+import { showFormattedDate } from '../utils';
 
 function DetailPageWrapper() {
   const { id } = useParams();
@@ -52,7 +53,7 @@ class DetailPage extends React.Component {
     return (
       <section>
         <h3 className="detail-page__title">{this.state.note.title}</h3>
-        <p className="detail-page__createdAt">{this.state.note.createdAt}</p>
+        <p className="detail-page__createdAt">{showFormattedDate(this.state.note.createdAt)}</p>
         <div className="detail-page__body">
           {this.state.note.body}
         </div>

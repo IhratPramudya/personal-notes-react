@@ -1,6 +1,8 @@
+/* eslint-disable react/require-default-props */
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import ButtonAdd from './ButtonAdd';
 import ButtonSave from './ButtonSave';
 
@@ -14,5 +16,9 @@ function NotesAction({ onSave }) {
     </div>
   );
 }
+
+NotesAction.propTypes = {
+  onSave: PropTypes.func,
+};
 
 export default NotesAction;
