@@ -5,6 +5,7 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import { useSearchParams } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import SerachBar from '../components/SearchBar';
 import { getAllNotes } from '../utils/local-data';
 import NotesList from '../components/NotesList';
@@ -60,5 +61,10 @@ class HomePage extends React.Component {
     );
   }
 }
+
+HomePage.propTypes = {
+  defaultKeyword: PropTypes.string.isRequired,
+  keywordChange: PropTypes.func.isRequired,
+};
 
 export default HomePageWrapper;

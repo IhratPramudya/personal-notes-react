@@ -19,7 +19,7 @@ function NotesDetailAction({
 NotesDetailAction.propTypes = {
   id: PropTypes.string.isRequired,
   deleteNote: PropTypes.func.isRequired,
-  archivenote: PropTypes.func,
+  archivenote: PropTypes.func.isRequired,
   archived: PropTypes.bool.isRequired,
   deleteArchiveNote: PropTypes.func,
 };

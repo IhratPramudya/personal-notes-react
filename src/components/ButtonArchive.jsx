@@ -14,9 +14,9 @@ function ButtonArchive({
 
 ButtonArchive.propTypes = {
   id: PropTypes.string.isRequired,
-  archivenote: PropTypes.func,
+  archivenote: PropTypes.func.isRequired,
   archived: PropTypes.bool.isRequired,
-  deleteArchiveNote: PropTypes.func,
+  deleteArchiveNote: PropTypes.func.isRequired,
 };
 
 export default ButtonArchive;

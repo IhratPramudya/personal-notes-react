@@ -18,7 +18,7 @@ function NotesAction({ onSave }) {
 }
 
 NotesAction.propTypes = {
-  onSave: PropTypes.func,
+  onSave: PropTypes.func.isRequired,
 };
 
 export default NotesAction;
