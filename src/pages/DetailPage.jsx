@@ -8,7 +8,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
   deleteNote, getNote, archiveNote, unarchiveNote,
-} from '../utils/local-data';
+} from '../utils/network-data';
 import NotesDetailAction from '../components/NotesDetailAction';
 import { showFormattedDate } from '../utils';
 
@@ -23,7 +23,7 @@ class DetailPage extends React.Component {
     super(props);
 
     this.state = {
-      note: getNote(props.id),
+      note: [],
     };
 
     this.onDeleteNoteHandler = this.onDeleteNoteHandler.bind(this);
@@ -31,22 +31,38 @@ class DetailPage extends React.Component {
     this.onDeleteArchivedHandler = this.onDeleteArchivedHandler.bind(this);
   }
 
-  onDeleteNoteHandler(id) {
-    deleteNote(id);
+  async componentDidMount() {
+    const { data } = await getNote(this.props.id);
 
-    this.props.navigate('/');
+    this.setState(() => {
+      return {
+        note: data,
+      };
+    });
   }
 
-  onArchiveNoteHandler(id) {
-    archiveNote(id);
+  async onDeleteNoteHandler(id) {
+    const { error } = await deleteNote(id);
 
-    this.props.navigate('/');
+    if (!error) {
+      this.props.navigate('/');
+    }
   }
 
-  onDeleteArchivedHandler(id) {
-    unarchiveNote(id);
+  async onArchiveNoteHandler(id) {
+    const { error } = await archiveNote(id);
 
-    this.props.navigate('/');
+    if (!error) {
+      this.props.navigate('/');
+    }
+  }
+
+  async onDeleteArchivedHandler(id) {
+    const { error } = await unarchiveNote(id);
+
+    if (!error) {
+      this.props.navigate('/');
+    }
   }
 
   render() {

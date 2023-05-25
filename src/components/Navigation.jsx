@@ -1,13 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import LocalContext from './LocalContext';
 
 function Navigation() {
   return (
-    <nav className="navigation">
-      <ul>
-        <li><Link to="/archives">Arsip</Link></li>
-      </ul>
-    </nav>
+    <LocalContext.Consumer>
+      {({ locale }) => (
+        <nav className="navigation">
+          <ul>
+            <li><Link to="/archives">{locale === 'indo' ? 'arsip' : 'archive'}</Link></li>
+          </ul>
+        </nav>
+      )}
+
+    </LocalContext.Consumer>
   );
 }
 
