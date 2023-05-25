@@ -1,3 +1,4 @@
+/* eslint-disable react/sort-comp */
 /* eslint-disable react/require-default-props */
 /* eslint-disable no-shadow */
 /* eslint-disable react/jsx-no-bind */
@@ -9,9 +10,10 @@
 import React from 'react';
 import { useSearchParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { getArchivedNotes } from '../utils/local-data';
+import { getArchivedNotes } from '../utils/network-data';
 import NotesList from '../components/NotesList';
 import SerachBar from '../components/SearchBar';
+import LocalContext from '../components/LocalContext';
 
 function ArchivePageWrapper() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -29,7 +31,7 @@ class ArchivePage extends React.Component {
     super(props);
 
     this.state = {
-      archived: getArchivedNotes(),
+      archived: [],
       keyword: props.defaultKeyword || '',
     };
 
@@ -46,6 +48,16 @@ class ArchivePage extends React.Component {
     this.props.keywordChange(keyword);
   }
 
+  async componentDidMount() {
+    const { data } = await getArchivedNotes();
+
+    this.setState(() => {
+      return {
+        archived: data,
+      };
+    });
+  }
+
   render() {
     const archived = this.state.archived.filter((archive) => {
       return archive.title.toLowerCase().includes(
@@ -54,11 +66,19 @@ class ArchivePage extends React.Component {
     });
 
     return (
-      <section className="archives-page">
-        <h2>Catatan Arsip</h2>
-        <SerachBar keyword={this.state.keyword} keywordChange={this.onChangeKeywordHandler} />
-        <NotesList notes={archived} />
-      </section>
+      <LocalContext.Consumer>
+        {({ locale }) => (
+          <section className="archives-page">
+            <h2>
+              {' '}
+              {locale === 'indo' ? 'Catatan Arsip' : 'Archived Record'}
+            </h2>
+            <SerachBar keyword={this.state.keyword} keywordChange={this.onChangeKeywordHandler} />
+            <NotesList notes={archived} />
+          </section>
+        )}
+
+      </LocalContext.Consumer>
     );
   }
 }

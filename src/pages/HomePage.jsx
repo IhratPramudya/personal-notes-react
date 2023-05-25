@@ -7,9 +7,10 @@ import React from 'react';
 import { useSearchParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import SerachBar from '../components/SearchBar';
-import { getAllNotes } from '../utils/local-data';
+import { getActiveNotes } from '../utils/network-data';
 import NotesList from '../components/NotesList';
 import NotesAction from '../components/NotesAction';
+import LocalContext from '../components/LocalContext';
 
 function HomePageWrapper() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -27,11 +28,21 @@ class HomePage extends React.Component {
     super(props);
 
     this.state = {
-      notes: getAllNotes(),
+      notes: [],
       keyword: props.defaultKeyword || '',
     };
 
     this.onKeywordChangeHandler = this.onKeywordChangeHandler.bind(this);
+  }
+
+  async componentDidMount() {
+    const { data } = await getActiveNotes();
+
+    this.setState(() => {
+      return {
+        notes: data,
+      };
+    });
   }
 
   onKeywordChangeHandler(keyword) {
@@ -52,12 +63,17 @@ class HomePage extends React.Component {
     });
 
     return (
-      <section className="homepage">
-        <h2>Catatan Aktif</h2>
-        <SerachBar keyword={this.state.keyword} keywordChange={this.onKeywordChangeHandler} />
-        <NotesList notes={notes.filter((note) => note.archived === false)} />
-        <NotesAction />
-      </section>
+      <LocalContext.Consumer>
+        {({ locale }) => (
+          <section className="homepage">
+            <h2>{locale === 'indo' ? 'Catatan Aktif' : 'active note'}</h2>
+            <SerachBar keyword={this.state.keyword} keywordChange={this.onKeywordChangeHandler} />
+            <NotesList notes={notes.filter((note) => note.archived === false)} />
+            <NotesAction />
+          </section>
+        )}
+
+      </LocalContext.Consumer>
     );
   }
 }

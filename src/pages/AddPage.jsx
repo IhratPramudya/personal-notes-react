@@ -6,14 +6,16 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import NotesAdd from '../components/NotesAdd';
-import { addNote } from '../utils/local-data';
+import { addNote } from '../utils/network-data';
 
 function AddPage() {
   const navigation = useNavigate();
-  function addNotesHandler(notes) {
-    addNote(notes);
+  async function addNotesHandler(notes) {
+    const { error } = await addNote(notes);
 
-    navigation('/');
+    if (!error) {
+      navigation('/');
+    }
   }
   return (
     <section className="add-new-page">
